@@ -13,7 +13,7 @@ kbd.mutual_uart_at_my_own_risk = true
 # Initialize GPIO assign
 kbd.init_pins(
   [ 4, 5, 6, 7 ],            # row0, row1,... respectively
-  [ 29, 28, 27, 26, 22, 20 ] # col0, col1,... respectively
+  [ 29, 28, 27, 26, 18, 20 ] # col0, col1,... respectively
 )
 
 kbd.add_layer :default, [
