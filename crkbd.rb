@@ -7,24 +7,24 @@ kbd.init_pins(
 )
 
 kbd.add_layer :default, %i[
-  KC_ESCAPE KC_Q  KC_W  KC_E      KC_R      KC_T    KC_Y    KC_U      KC_I     KC_O   KC_P      KC_BSLASH
-  KC_TAB    KC_A  KC_S  KC_D      KC_F      KC_G    KC_H    KC_J      KC_K     KC_L   KC_SCOLON KC_QUOTE
-  KC_LSFT   KC_Z  KC_X  KC_C      KC_V      KC_B    KC_N    KC_M      KC_COMMA KC_DOT KC_SLASH  KC_MINUS
-  KC_NO     KC_NO KC_NO KC_BSPACE LOWER_SPC KC_LCTL KC_RGUI RAISE_ENT KC_RALT  KC_NO  KC_NO     KC_NO
+  KC_TAB  KC_Q  KC_W  KC_E      KC_R      KC_T    KC_Y    KC_U      KC_I     KC_O   KC_P      KC_MINUS
+  KC_ZKHK KC_A  KC_S  KC_D      KC_F      KC_G    KC_H    KC_J      KC_K     KC_L   KC_SCOLON KC_QUOTE
+  KC_LSFT KC_Z  KC_X  KC_C      KC_V      KC_B    KC_N    KC_M      KC_COMMA KC_DOT KC_SLASH  KC_EQUAL
+  KC_NO   KC_NO KC_NO KC_BSPACE LOWER_SPC KC_LCTL KC_RGUI RAISE_ENT KC_RALT  KC_NO  KC_NO     KC_NO
 ]
 
 kbd.add_layer :raise, %i[
-  KC_GRAVE KC_EXLM KC_AT   KC_HASH     KC_DLR  KC_PERC  KC_CIRC KC_AMPR   KC_ASTER KC_LPRN  KC_RPRN  KC_PIPE
-  KC_TAB   KC_LABK KC_LCBR KC_LBRACKET KC_LPRN KC_QUOTE KC_LEFT KC_DOWN   KC_UP    KC_RIGHT KC_UNDS  KC_PLUS
-  KC_LSFT  KC_RABK KC_RCBR KC_RBRACKET KC_RPRN KC_DQUO  KC_TILD KC_BSLASH KC_COMMA KC_DOT   KC_SLASH KC_EQUAL
-  KC_NO    KC_NO   KC_NO   KC_LANG1    ADJUST  KC_LCTL  KC_RGUI RAISE_ENT KC_RALT  KC_NO    KC_NO    KC_NO
+  KC_ESC  KC_EXLM KC_AT   KC_HASH     KC_DLR  KC_PERC  KC_CIRC KC_AMPR   KC_ASTER KC_LPRN  KC_RPRN KC_BSLASH
+  KC_ZKHK KC_LABK KC_LCBR KC_LBRACKET KC_LPRN KC_QUOTE KC_LEFT KC_DOWN   KC_UP    KC_RIGHT KC_UNDS  KC_DQUO
+  KC_LSFT KC_RABK KC_RCBR KC_RBRACKET KC_RPRN KC_DQUO  KC_TILD KC_BSLASH KC_COMMA KC_DOT   KC_SLASH KC_PLUS
+  KC_NO   KC_NO   KC_NO   KC_LANG1    ADJUST  KC_LCTL  KC_RGUI RAISE_ENT KC_RALT  KC_NO    KC_NO    KC_NO
 ]
 
 kbd.add_layer :lower, %i[
-  KC_ESCAPE KC_1    KC_2    KC_3        KC_4      KC_5     KC_6    KC_7   KC_8     KC_9  KC_0     KC_PLUS
-  KC_TAB    KC_NO   KC_NO   KC_NO       KC_LPRN   KC_QUOTE KC_DOT  KC_4   KC_5     KC_6  KC_PLUS  KC_ASTER
-  KC_LSFT   KC_RABK KC_RCBR KC_RBRACKET KC_RPRN   KC_DQUO  KC_0    KC_1   KC_2     KC_3  KC_SLASH KC_COMMA
-  KC_NO     KC_NO   KC_NO   KC_BSPACE   LOWER_SPC KC_LCTL  KC_RGUI ADJUST KC_LANG2 KC_NO KC_NO    KC_NO
+  KC_ESC  KC_1    KC_2    KC_3        KC_4      KC_5     KC_6    KC_7   KC_8     KC_9  KC_0        KC_BSLASH
+  KC_ZKHK KC_NO   KC_NO   KC_NO       KC_LPRN   KC_QUOTE KC_NO   KC_NO  KC_NO    KC_NO KC_LPRN     KC_RPRN
+  KC_LSFT KC_RABK KC_RCBR KC_RBRACKET KC_RPRN   KC_DQUO  KC_0    KC_NO  KC_NO    KC_NO KC_LBRACKET KC_RBRACKET
+  KC_NO   KC_NO   KC_NO   KC_BSPACE   LOWER_SPC KC_LCTL  KC_RGUI ADJUST KC_LANG2 KC_NO KC_NO       KC_NO
 ]
 
 kbd.add_layer :adjust, %i[
@@ -34,14 +34,10 @@ kbd.add_layer :adjust, %i[
   KC_NO   KC_NO   KC_NO   KC_BSPACE ADJUST  KC_LCTL  SPC_CTL ADJUST KC_NO KC_NO  KC_NO  KC_NO
 ]
 
-kbd.define_composite_key :SPC_CTL, %i(KC_SPACE KC_RCTL)
-
-kbd.define_mode_key :ALT_AT,    [ :KC_AT,                    :KC_LALT, 150, 150 ]
-kbd.define_mode_key :RAISE_ENT, [ :KC_ENTER,                 :raise,   150, 150 ]
-kbd.define_mode_key :LOWER_SPC, [ :KC_SPACE,                 :lower,   150, 150 ]
-kbd.define_mode_key :RUBY_GUI,  [ Proc.new { kbd.ruby },     nil,      300, nil ]
-kbd.define_mode_key :ADJUST,    [ nil,                       :adjust,  nil, nil ]
-kbd.define_mode_key :BOOTSEL,   [ Proc.new { kbd.bootsel! }, nil,      300, nil ]
+kbd.define_mode_key :RAISE_ENT, [ :KC_ENTER,                 :raise,  150, 150 ]
+kbd.define_mode_key :LOWER_SPC, [ :KC_SPACE,                 :lower,  150, 150 ]
+kbd.define_mode_key :ADJUST,    [ nil,                       :adjust, nil, nil ]
+kbd.define_mode_key :BOOTSEL,   [ Proc.new { kbd.bootsel! }, nil,     300, nil ]
 
 # Initialize RGBLED with pin, underglow_size, backlight_size and is_rgbw.
 rgb = RGB.new(
@@ -50,8 +46,10 @@ rgb = RGB.new(
   21,   # size of backlight pixel
   false # 32bit data will be sent to a pixel if true while 24bit if false
 )
-rgb.effect = :circle
-rgb.speed = 28
+rgb.effect = :swirl
+rgb.speed = 22
+rgb.hue = 100
+rgb.value = 31
 [
   # Under glow
   # 👇[0, 10],[74,10],[148,10], 👈Starts here and goes left
